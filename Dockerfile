@@ -1,5 +1,5 @@
 # Build stage
-FROM rust:1.91.0-alpine3.22 as builder
+FROM rust:1.92.0-alpine3.22 as builder
 
 # Устанавливаем зависимости для сборки
 RUN apk add --no-cache musl-dev openssl-dev pkgconfig openssl-libs-static
