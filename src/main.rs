@@ -142,7 +142,10 @@ async fn callback_handler(bot: Bot, q: CallbackQuery) -> ResponseResult<()> {
             },
         }
 
-        bot.answer_callback_query(q.id).await?;
+        match bot.answer_callback_query(q.id).await {
+            Ok(_) => {}
+            Err(e) => {}
+        }
     }
     Ok(())
 }
