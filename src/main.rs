@@ -25,19 +25,34 @@ async fn message_handler(bot: Bot, msg: Message) -> ResponseResult<()> {
         match text {
             "/start" | "/menu" => {
                 let keyboard = make_main_keyboard();
-                bot.send_message(msg.chat.id, "Главное меню:")
+                match bot
+                    .send_message(msg.chat.id, "Главное меню:")
                     .reply_markup(keyboard)
-                    .await?;
+                    .await
+                {
+                    Ok(_) => {}
+                    Err(e) => {}
+                }
             }
             "/info" => {
                 let help_text = get_info_text();
-                bot.send_message(msg.chat.id, help_text)
+                match bot
+                    .send_message(msg.chat.id, help_text)
                     .parse_mode(teloxide::types::ParseMode::Html)
-                    .await?;
+                    .await
+                {
+                    Ok(_) => {}
+                    Err(e) => {}
+                }
             }
             _ => {
-                bot.send_message(msg.chat.id, "Используйте /menu для отображения меню")
-                    .await?;
+                match bot
+                    .send_message(msg.chat.id, "Используйте /menu для отображения меню")
+                    .await
+                {
+                    Ok(_) => {}
+                    Err(e) => {}
+                }
             }
         }
     }
@@ -85,28 +100,52 @@ async fn callback_handler(bot: Bot, q: CallbackQuery) -> ResponseResult<()> {
         match data.as_str() {
             "info" => {
                 let help_text = get_info_text();
-                bot.send_message(chat_id, help_text)
+                match bot
+                    .send_message(chat_id, help_text)
                     .parse_mode(teloxide::types::ParseMode::Html)
-                    .await?;
+                    .await
+                {
+                    Ok(_) => {}
+                    Err(e) => {}
+                }
             }
             "status" => {
-                bot.send_message(chat_id, "Функция статуса будет реализована позже 📊")
-                    .await?;
+                match bot
+                    .send_message(chat_id, "Функция статуса будет реализована позже 📊")
+                    .await
+                {
+                    Ok(_) => {}
+                    Err(e) => {}
+                }
             }
             "profit" => {
-                bot.send_message(chat_id, "Функция прибыли будет реализована позже 💰")
-                    .await?;
+                match bot
+                    .send_message(chat_id, "Функция прибыли будет реализована позже 💰")
+                    .await
+                {
+                    Ok(_) => {}
+                    Err(e) => {}
+                }
             }
             "trading" => {
-                bot.send_message(chat_id, "Функции торговли будут реализованы позже ⚡")
-                    .await?;
+                match bot
+                    .send_message(chat_id, "Функции торговли будут реализованы позже ⚡")
+                    .await
+                {
+                    Ok(_) => {}
+                    Err(e) => {}
+                }
             }
-            _ => {
-                bot.send_message(chat_id, "Неизвестное действие").await?;
-            }
+            _ => match bot.send_message(chat_id, "Неизвестное действие").await {
+                Ok(_) => {}
+                Err(e) => {}
+            },
         }
 
-        bot.answer_callback_query(q.id).await?;
+        match bot.answer_callback_query(q.id).await {
+            Ok(_) => {}
+            Err(e) => {}
+        }
     }
     Ok(())
 }
