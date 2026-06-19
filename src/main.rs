@@ -34,7 +34,6 @@ async fn message_handler(bot: Bot, msg: Message) -> ResponseResult<()> {
                     Err(e) => {
                         let msg: String = format!("Fail:{}", e);
                         log::error!("{}", msg);
-                        ()
                     }
                 }
             }
@@ -49,7 +48,6 @@ async fn message_handler(bot: Bot, msg: Message) -> ResponseResult<()> {
                     Err(e) => {
                         let msg: String = format!("Fail:{}", e);
                         log::error!("{}", msg);
-                        ()
                     }
                 }
             }
@@ -62,12 +60,13 @@ async fn message_handler(bot: Bot, msg: Message) -> ResponseResult<()> {
                     Err(e) => {
                         let msg: String = format!("Fail:{}", e);
                         log::error!("{}", msg);
-                        ()
                     }
                 }
             }
         },
-        None => {}
+        None => {
+            log::error!("{}", "Empty msg:None");
+        }
     }
 
     Ok(())
@@ -123,7 +122,6 @@ async fn callback_handler(bot: Bot, q: CallbackQuery) -> ResponseResult<()> {
                     Err(e) => {
                         let msg: String = format!("Fail:{}", e);
                         log::error!("{}", msg);
-                        ()
                     }
                 }
             }
@@ -136,7 +134,6 @@ async fn callback_handler(bot: Bot, q: CallbackQuery) -> ResponseResult<()> {
                     Err(e) => {
                         let msg: String = format!("Fail:{}", e);
                         log::error!("{}", msg);
-                        ()
                     }
                 }
             }
@@ -149,7 +146,6 @@ async fn callback_handler(bot: Bot, q: CallbackQuery) -> ResponseResult<()> {
                     Err(e) => {
                         let msg: String = format!("Fail:{}", e);
                         log::error!("{}", msg);
-                        ()
                     }
                 }
             }
@@ -162,7 +158,6 @@ async fn callback_handler(bot: Bot, q: CallbackQuery) -> ResponseResult<()> {
                     Err(e) => {
                         let msg: String = format!("Fail:{}", e);
                         log::error!("{}", msg);
-                        ()
                     }
                 }
             }
@@ -171,7 +166,6 @@ async fn callback_handler(bot: Bot, q: CallbackQuery) -> ResponseResult<()> {
                 Err(e) => {
                     let msg: String = format!("Fail:{}", e);
                     log::error!("{}", msg);
-                    ()
                 }
             },
         }
@@ -181,7 +175,6 @@ async fn callback_handler(bot: Bot, q: CallbackQuery) -> ResponseResult<()> {
             Err(e) => {
                 let msg: String = format!("Fail:{}", e);
                 log::error!("{}", msg);
-                ()
             }
         }
     }
