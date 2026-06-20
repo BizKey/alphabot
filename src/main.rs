@@ -7,7 +7,7 @@ async fn main() {
     pretty_env_logger::init();
     log::info!("Starting bot...");
 
-    let bot = Bot::from_env();
+    let bot: Bot = Bot::from_env();
 
     let handler = dptree::entry()
         .branch(Update::filter_message().endpoint(message_handler))
@@ -21,8 +21,8 @@ async fn main() {
 }
 
 async fn message_handler(bot: Bot, msg: Message) -> ResponseResult<()> {
-    if let Some(text) = msg.text() {
-        match text {
+    match msg.text() {
+        Some(text) => match text {
             "/start" | "/menu" => {
                 let keyboard = make_main_keyboard();
                 match bot
@@ -31,18 +31,24 @@ async fn message_handler(bot: Bot, msg: Message) -> ResponseResult<()> {
                     .await
                 {
                     Ok(_) => {}
-                    Err(e) => {}
+                    Err(e) => {
+                        let msg: String = format!("Fail:{}", e);
+                        log::error!("{}", msg);
+                    }
                 }
             }
             "/info" => {
-                let help_text = get_info_text();
+                let help_text: String = get_info_text();
                 match bot
                     .send_message(msg.chat.id, help_text)
                     .parse_mode(teloxide::types::ParseMode::Html)
                     .await
                 {
                     Ok(_) => {}
-                    Err(e) => {}
+                    Err(e) => {
+                        let msg: String = format!("Fail:{}", e);
+                        log::error!("{}", msg);
+                    }
                 }
             }
             _ => {
@@ -51,11 +57,18 @@ async fn message_handler(bot: Bot, msg: Message) -> ResponseResult<()> {
                     .await
                 {
                     Ok(_) => {}
-                    Err(e) => {}
+                    Err(e) => {
+                        let msg: String = format!("Fail:{}", e);
+                        log::error!("{}", msg);
+                    }
                 }
             }
+        },
+        None => {
+            log::error!("{}", "Empty msg:None");
         }
     }
+
     Ok(())
 }
 
@@ -99,14 +112,17 @@ async fn callback_handler(bot: Bot, q: CallbackQuery) -> ResponseResult<()> {
         let chat_id = q.from.id;
         match data.as_str() {
             "info" => {
-                let help_text = get_info_text();
+                let help_text: String = get_info_text();
                 match bot
                     .send_message(chat_id, help_text)
                     .parse_mode(teloxide::types::ParseMode::Html)
                     .await
                 {
                     Ok(_) => {}
-                    Err(e) => {}
+                    Err(e) => {
+                        let msg: String = format!("Fail:{}", e);
+                        log::error!("{}", msg);
+                    }
                 }
             }
             "status" => {
@@ -115,7 +131,10 @@ async fn callback_handler(bot: Bot, q: CallbackQuery) -> ResponseResult<()> {
                     .await
                 {
                     Ok(_) => {}
-                    Err(e) => {}
+                    Err(e) => {
+                        let msg: String = format!("Fail:{}", e);
+                        log::error!("{}", msg);
+                    }
                 }
             }
             "profit" => {
@@ -124,7 +143,10 @@ async fn callback_handler(bot: Bot, q: CallbackQuery) -> ResponseResult<()> {
                     .await
                 {
                     Ok(_) => {}
-                    Err(e) => {}
+                    Err(e) => {
+                        let msg: String = format!("Fail:{}", e);
+                        log::error!("{}", msg);
+                    }
                 }
             }
             "trading" => {
@@ -133,18 +155,27 @@ async fn callback_handler(bot: Bot, q: CallbackQuery) -> ResponseResult<()> {
                     .await
                 {
                     Ok(_) => {}
-                    Err(e) => {}
+                    Err(e) => {
+                        let msg: String = format!("Fail:{}", e);
+                        log::error!("{}", msg);
+                    }
                 }
             }
             _ => match bot.send_message(chat_id, "Неизвестное действие").await {
                 Ok(_) => {}
-                Err(e) => {}
+                Err(e) => {
+                    let msg: String = format!("Fail:{}", e);
+                    log::error!("{}", msg);
+                }
             },
         }
 
         match bot.answer_callback_query(q.id).await {
             Ok(_) => {}
-            Err(e) => {}
+            Err(e) => {
+                let msg: String = format!("Fail:{}", e);
+                log::error!("{}", msg);
+            }
         }
     }
     Ok(())
