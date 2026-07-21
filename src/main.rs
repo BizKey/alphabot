@@ -2,10 +2,20 @@ use teloxide::dispatching::UpdateFilterExt;
 use teloxide::dptree;
 use teloxide::prelude::*;
 use teloxide::types::{CallbackQuery, InlineKeyboardButton, InlineKeyboardMarkup};
+use tracing::{error, info};
+
+fn init_tracing() {
+    tracing_subscriber::fmt()
+        .with_env_filter(tracing_subscriber::EnvFilter::from_default_env())
+        .with_target(true)
+        .with_thread_ids(true)
+        .init();
+}
+
 #[tokio::main]
 async fn main() {
-    pretty_env_logger::init();
-    log::info!("Starting bot...");
+    init_tracing();
+    info!("Starting bot...");
 
     let bot: Bot = Bot::from_env();
 
@@ -33,7 +43,7 @@ async fn message_handler(bot: Bot, msg: Message) -> ResponseResult<()> {
                     Ok(_) => {}
                     Err(e) => {
                         let msg: String = format!("Fail:{}", e);
-                        log::error!("{}", msg);
+                        error!("{}", msg);
                     }
                 }
             }
@@ -47,7 +57,7 @@ async fn message_handler(bot: Bot, msg: Message) -> ResponseResult<()> {
                     Ok(_) => {}
                     Err(e) => {
                         let msg: String = format!("Fail:{}", e);
-                        log::error!("{}", msg);
+                        error!("{}", msg);
                     }
                 }
             }
@@ -59,13 +69,13 @@ async fn message_handler(bot: Bot, msg: Message) -> ResponseResult<()> {
                     Ok(_) => {}
                     Err(e) => {
                         let msg: String = format!("Fail:{}", e);
-                        log::error!("{}", msg);
+                        error!("{}", msg);
                     }
                 }
             }
         },
         None => {
-            log::error!("{}", "Empty msg:None");
+            error!("{}", "Empty msg:None");
         }
     }
 
@@ -121,7 +131,7 @@ async fn callback_handler(bot: Bot, q: CallbackQuery) -> ResponseResult<()> {
                     Ok(_) => {}
                     Err(e) => {
                         let msg: String = format!("Fail:{}", e);
-                        log::error!("{}", msg);
+                        error!("{}", msg);
                     }
                 }
             }
@@ -133,7 +143,7 @@ async fn callback_handler(bot: Bot, q: CallbackQuery) -> ResponseResult<()> {
                     Ok(_) => {}
                     Err(e) => {
                         let msg: String = format!("Fail:{}", e);
-                        log::error!("{}", msg);
+                        error!("{}", msg);
                     }
                 }
             }
@@ -145,7 +155,7 @@ async fn callback_handler(bot: Bot, q: CallbackQuery) -> ResponseResult<()> {
                     Ok(_) => {}
                     Err(e) => {
                         let msg: String = format!("Fail:{}", e);
-                        log::error!("{}", msg);
+                        error!("{}", msg);
                     }
                 }
             }
@@ -157,7 +167,7 @@ async fn callback_handler(bot: Bot, q: CallbackQuery) -> ResponseResult<()> {
                     Ok(_) => {}
                     Err(e) => {
                         let msg: String = format!("Fail:{}", e);
-                        log::error!("{}", msg);
+                        error!("{}", msg);
                     }
                 }
             }
@@ -165,7 +175,7 @@ async fn callback_handler(bot: Bot, q: CallbackQuery) -> ResponseResult<()> {
                 Ok(_) => {}
                 Err(e) => {
                     let msg: String = format!("Fail:{}", e);
-                    log::error!("{}", msg);
+                    error!("{}", msg);
                 }
             },
         }
@@ -174,7 +184,7 @@ async fn callback_handler(bot: Bot, q: CallbackQuery) -> ResponseResult<()> {
             Ok(_) => {}
             Err(e) => {
                 let msg: String = format!("Fail:{}", e);
-                log::error!("{}", msg);
+                error!("{}", msg);
             }
         }
     }
