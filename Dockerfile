@@ -27,6 +27,4 @@ COPY --from=builder /app/target/release/alphabot /app/alphabot
 
 USER myuser
 
-ENV RUST_LOG=INFO
-
 CMD ["/app/alphabot"]
