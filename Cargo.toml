@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-teloxide = { version = "0.17", default-features = false, features = ["ctrlc_handler"]}
+teloxide = { version = "0.17", default-features = false, features = ["ctrlc_handler", "rustls"]}
 tokio = { version =  "1.53", default-features = false, features = ["rt-multi-thread", "macros"]}
 tracing = { version = "0.1", default-features = false }
 tracing-subscriber = { version = "0.3", default-features = false, features = ["env-filter"]}
