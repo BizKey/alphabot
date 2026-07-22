@@ -4,11 +4,11 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-teloxide = { version = "0.17.0", default-features = false, features = ["macros", "rustls", "ctrlc_handler"] }
-tokio = { version =  "1.53", features = ["rt-multi-thread", "macros"] }
-tracing = "0.1"
-tracing-subscriber = { version = "0.3", features = ["env-filter", "json"] }
-tracing-appender = "0.2"
+teloxide = { version = "0.17", default-features = false, features = ["ctrlc_handler"]}
+tokio = { version =  "1.53", default-features = false, features = ["rt-multi-thread", "macros"]}
+tracing = { version = "0.1", default-features = false }
+tracing-subscriber = { version = "0.3", default-features = false, features = ["env-filter"]}
+tracing-appender = { version = "0.2", default-features = false }
 
 [profile.release]
 opt-level = 3
@@ -20,3 +20,12 @@ incremental = false
 
 [profile.dev]
 opt-level = 0
+debug = true
+
+[profile.bench]
+inherits = "release"
+debug = true
+
+[profile.test]
+inherits = "dev"
+opt-level = 1
