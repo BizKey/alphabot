@@ -31,51 +31,50 @@ async fn main() {
 }
 
 async fn message_handler(bot: Bot, msg: Message) -> ResponseResult<()> {
-    match msg.text() {
-        Some(text) => match text {
-            "/start" | "/menu" => {
-                let keyboard = make_main_keyboard();
-                match bot
-                    .send_message(msg.chat.id, "Главное меню:")
-                    .reply_markup(keyboard)
-                    .await
-                {
-                    Ok(_) => {}
-                    Err(e) => {
-                        let msg: String = format!("Fail:{}", e);
-                        error!("{}", msg);
-                    }
+    let Some(text) = msg.text() else {
+        error!("{}", "Empty msg:None");
+        return Ok(());
+    };
+    match text {
+        "/start" | "/menu" => {
+            let keyboard = make_main_keyboard();
+            match bot
+                .send_message(msg.chat.id, "Главное меню:")
+                .reply_markup(keyboard)
+                .await
+            {
+                Ok(_) => {}
+                Err(e) => {
+                    let msg: String = format!("Fail:{}", e);
+                    error!("{}", msg);
                 }
             }
-            "/info" => {
-                let help_text: String = get_info_text();
-                match bot
-                    .send_message(msg.chat.id, help_text)
-                    .parse_mode(teloxide::types::ParseMode::Html)
-                    .await
-                {
-                    Ok(_) => {}
-                    Err(e) => {
-                        let msg: String = format!("Fail:{}", e);
-                        error!("{}", msg);
-                    }
+        }
+        "/info" => {
+            let help_text: String = get_info_text();
+            match bot
+                .send_message(msg.chat.id, help_text)
+                .parse_mode(teloxide::types::ParseMode::Html)
+                .await
+            {
+                Ok(_) => {}
+                Err(e) => {
+                    let msg: String = format!("Fail:{}", e);
+                    error!("{}", msg);
                 }
             }
-            _ => {
-                match bot
-                    .send_message(msg.chat.id, "Используйте /menu для отображения меню")
-                    .await
-                {
-                    Ok(_) => {}
-                    Err(e) => {
-                        let msg: String = format!("Fail:{}", e);
-                        error!("{}", msg);
-                    }
+        }
+        _ => {
+            match bot
+                .send_message(msg.chat.id, "Используйте /menu для отображения меню")
+                .await
+            {
+                Ok(_) => {}
+                Err(e) => {
+                    let msg: String = format!("Fail:{}", e);
+                    error!("{}", msg);
                 }
             }
-        },
-        None => {
-            error!("{}", "Empty msg:None");
         }
     }
 
