@@ -17,7 +17,7 @@ async fn main() {
     init_tracing();
     info!("Starting bot...");
 
-    let bot: Bot = Bot::from_env();
+    let bot = Bot::from_env();
 
     let handler = dptree::entry()
         .branch(Update::filter_message().endpoint(message_handler))
@@ -45,13 +45,13 @@ async fn message_handler(bot: Bot, msg: Message) -> ResponseResult<()> {
             {
                 Ok(_) => {}
                 Err(e) => {
-                    let msg: String = format!("Fail:{}", e);
+                    let msg = format!("Fail:{}", e);
                     error!("{}", msg);
                 }
             }
         }
         "/info" => {
-            let help_text: String = get_info_text();
+            let help_text = get_info_text();
             match bot
                 .send_message(msg.chat.id, help_text)
                 .parse_mode(teloxide::types::ParseMode::Html)
@@ -59,7 +59,7 @@ async fn message_handler(bot: Bot, msg: Message) -> ResponseResult<()> {
             {
                 Ok(_) => {}
                 Err(e) => {
-                    let msg: String = format!("Fail:{}", e);
+                    let msg = format!("Fail:{}", e);
                     error!("{}", msg);
                 }
             }
@@ -71,7 +71,7 @@ async fn message_handler(bot: Bot, msg: Message) -> ResponseResult<()> {
             {
                 Ok(_) => {}
                 Err(e) => {
-                    let msg: String = format!("Fail:{}", e);
+                    let msg = format!("Fail:{}", e);
                     error!("{}", msg);
                 }
             }
@@ -121,7 +121,7 @@ async fn callback_handler(bot: Bot, q: CallbackQuery) -> ResponseResult<()> {
         let chat_id = q.from.id;
         match data.as_str() {
             "info" => {
-                let help_text: String = get_info_text();
+                let help_text = get_info_text();
                 match bot
                     .send_message(chat_id, help_text)
                     .parse_mode(teloxide::types::ParseMode::Html)
@@ -129,7 +129,7 @@ async fn callback_handler(bot: Bot, q: CallbackQuery) -> ResponseResult<()> {
                 {
                     Ok(_) => {}
                     Err(e) => {
-                        let msg: String = format!("Fail:{}", e);
+                        let msg = format!("Fail:{}", e);
                         error!("{}", msg);
                     }
                 }
@@ -141,7 +141,7 @@ async fn callback_handler(bot: Bot, q: CallbackQuery) -> ResponseResult<()> {
                 {
                     Ok(_) => {}
                     Err(e) => {
-                        let msg: String = format!("Fail:{}", e);
+                        let msg = format!("Fail:{}", e);
                         error!("{}", msg);
                     }
                 }
@@ -153,7 +153,7 @@ async fn callback_handler(bot: Bot, q: CallbackQuery) -> ResponseResult<()> {
                 {
                     Ok(_) => {}
                     Err(e) => {
-                        let msg: String = format!("Fail:{}", e);
+                        let msg = format!("Fail:{}", e);
                         error!("{}", msg);
                     }
                 }
@@ -165,7 +165,7 @@ async fn callback_handler(bot: Bot, q: CallbackQuery) -> ResponseResult<()> {
                 {
                     Ok(_) => {}
                     Err(e) => {
-                        let msg: String = format!("Fail:{}", e);
+                        let msg = format!("Fail:{}", e);
                         error!("{}", msg);
                     }
                 }
@@ -173,7 +173,7 @@ async fn callback_handler(bot: Bot, q: CallbackQuery) -> ResponseResult<()> {
             _ => match bot.send_message(chat_id, "Неизвестное действие").await {
                 Ok(_) => {}
                 Err(e) => {
-                    let msg: String = format!("Fail:{}", e);
+                    let msg = format!("Fail:{}", e);
                     error!("{}", msg);
                 }
             },
@@ -182,7 +182,7 @@ async fn callback_handler(bot: Bot, q: CallbackQuery) -> ResponseResult<()> {
         match bot.answer_callback_query(q.id).await {
             Ok(_) => {}
             Err(e) => {
-                let msg: String = format!("Fail:{}", e);
+                let msg = format!("Fail:{}", e);
                 error!("{}", msg);
             }
         }
