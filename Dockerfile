@@ -2,7 +2,7 @@
 FROM rust:1.97.1-alpine3.24 as builder
 
 RUN apk add --no-cache musl-dev
-ENV RUSTFLAGS="-C target-cpu=x86-64-v3"
+ENV RUSTFLAGS="-C target-cpu=broadwell"
 
 WORKDIR /app
 
