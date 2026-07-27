@@ -30,9 +30,6 @@ RUN addgroup --system --gid 1000 appuser && adduser --system --uid 1000 --gid 10
 
 COPY --from=builder /app/target/release/alphabot /app/alphabot
 
-COPY --chown=appuser:appuser static ./static
-COPY --chown=appuser:appuser templates ./templates
-
 USER appuser
 
 CMD ["/app/alphabot"]
