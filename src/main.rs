@@ -31,10 +31,12 @@ async fn main() {
 }
 
 async fn message_handler(bot: Bot, msg: Message) -> ResponseResult<()> {
-    let Some(text) = msg.text() else {
-        error!("{}", "Empty msg:None");
-        return Ok(());
+    let text = match msg.text() {
+        Some(text) => text,
+        None => {error!("{}", "Empty msg:None");
+        return Ok(());}
     };
+
     match text {
         "/start" | "/menu" => {
             let keyboard = make_main_keyboard();
