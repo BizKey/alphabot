@@ -33,10 +33,8 @@ async fn main() {
 async fn message_handler(bot: Bot, msg: Message) -> ResponseResult<()> {
     let text = match msg.text() {
         Some(text) => text,
-        None => {
-            error!("{}", "Empty msg:None");
-            return Ok(());
-        }
+        None => {error!("{}", "Empty msg:None");
+        return Ok(());}
     };
 
     match text {
